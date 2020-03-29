@@ -1,4 +1,4 @@
-function [] = benchmarkingScript(K)
+function [W,S,G,x_spec] = benchmarkingScript(points,K)
 % A Benchmarking Script that takes the coordinate list from a dataset and,
 % depending on which connectivity graph construction and similarity
 % function we choose, it gives us: 
@@ -24,15 +24,17 @@ function [] = benchmarkingScript(K)
 %       - 3: Extended Gaussian Similarity Function
 %       - 4: CNN similarity measure
 %   
-    if nargin < 1
-        K = 2;
-    end
+
+%     if nargin < 1
+%         K = 2;
+%     end
     
     warning off
-    addpath wgPlot/
     addpath datasets
+    addpath helperFunctions/
+    addpath helperFunctions/wgPlot/
    
-    [points,~,~,~,~,~] = getPoints();
+%     [points,~,~,~,~,~] = getPoints();
     
     done = false;
     while (~done)
@@ -54,13 +56,9 @@ function [] = benchmarkingScript(K)
                 fprintf('The graph is not connected.\n'); 
             end
             
-            W = S .* G;
-            spy(W)
-            if (det(W) ~= 0)
-                plotter(W, K, points);
-            end
-            
-            
+            W = sparse(S .* G);
+            x_spec = plotter(W, K, points);
+
         elseif connGraph == 2 % kNN Connectivity Matrix
             scatter(points(:,1), points(:,2));
             [G] = kNNConGraph(points,10);
@@ -70,11 +68,11 @@ function [] = benchmarkingScript(K)
             end
             
             [S] = chooseSimFun(points);
-            W = S .* G;
+            W = sparse(S .* G);
             spy(W)
-            if (det(W) ~= 0)
-                plotter(W, K, points);
-            end
+%             if (det(W) ~= 0)
+            x_spec = plotter(W, K, points);
+%             end
             
         elseif connGraph == 3 % mkNN Connectivity Matrix
             scatter(points(:,1), points(:,2));
@@ -85,11 +83,11 @@ function [] = benchmarkingScript(K)
             end
             
             [S] = chooseSimFun(points);
-            W = S .* G;
+            W = sparse(S .* G);
             spy(W)
-            if (det(W) ~= 0)
-                plotter(W, K, points);
-            end
+%             if (det(W) ~= 0)
+            x_spec = plotter(W, K, points);
+%             end
             
         elseif connGraph == 4 % CNN Connectivity Matrix
             % TODO
