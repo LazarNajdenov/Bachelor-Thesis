@@ -13,11 +13,11 @@ function S = chooseSimFun(Pts)
     while (~done)
         sim = input('Choose the similarity function you want to use\n');
         if sim == 1 % Gaussian Similarity Matrix
-            S = gaussSimilarityfunc(Pts(:, 1:2));
+            S = gaussSimilarityfunc(Pts);
         elseif sim == 2 % Max Similarity Matrix
-            S = maxSimilarityfunc(Pts(:, 1:2),10);
+            S = maxSimilarityfunc(Pts,10);
         elseif sim == 3 % Extended Gaussian Similarity Matrix
-            S = extGaussSimilarityfunc(Pts(:, 1:2),10);
+            S = extGaussSimilarityfunc(Pts,10);
         elseif sim == 4 % CNN Similarity Matrix
             % TODO CNN  
             fprintf('To be done\n');

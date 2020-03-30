@@ -24,21 +24,33 @@ function [x_spec] = plotter(W, K, Pts)
     
 %     % Graph Laplacian creation     
     [L,~] = CreateLapl(W);
-    
-%     % \----------------------------/
-%     % EigenVector Computation
-    [V,~] = eigs(L, K, 'smallestabs'); 
-%     % \----------------------------/
+
+ 
+%     % EigenVector Computation wih eigs
+%     [V,~] = eigs(L, K, 'smallestabs'); 
+
+
+%   % Eigenvector computation with eig   
+%   % Compute diagonal matrix D of eigenvalues and matrix Vss whose columns 
+%   % are the corresponding right eigenvectors  
+    [Vss,D] = eig(L);
+%   % Sort the Eigenvalues in ascending order by magnitude
+    [~,ind] = sort(diag(D), 'ComparisonMethod','abs');
+%   % Rearrange the eigenvector corresponding to their eigenvalues  
+    Vs = Vss(:,ind);
+%   % Take the first K eigenvectors corresponding to the K smallest eigenvalues  
+    V = Vs(:,1:K);
+      
 
 %     % EigenVector plot
-    % figure(3)
-    % plot(W,V(:,[2,3]));
-    % xlabel('Eigenvector coordinates')
+%     figure(3)
+%     plot(W,V(:,[2,3]));
+%     xlabel('Eigenvector coordinates')
 
 %     % Cluster rows of eigenvector matrix of L corresponding to K smallest
 %     % eigenvalues. Use kmeans for that.
     [~,x_spec] = kmeans_mod(V,K,n);
-%     figure(3)
+%     figure
 %     gplotmap(W,Pts,x_spec)
 %     title('Spectral clustering result')
 

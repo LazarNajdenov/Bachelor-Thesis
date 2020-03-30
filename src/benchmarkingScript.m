@@ -1,4 +1,4 @@
-function [W,S,G,x_spec] = benchmarkingScript(points,K)
+function [W,S,G,x_spec] = benchmarkingScript(points, K)
 % A Benchmarking Script that takes the coordinate list from a dataset and,
 % depending on which connectivity graph construction and similarity
 % function we choose, it gives us: 
@@ -57,8 +57,9 @@ function [W,S,G,x_spec] = benchmarkingScript(points,K)
             end
             
             W = sparse(S .* G);
+            spy(W)
             x_spec = plotter(W, K, points);
-
+        
         elseif connGraph == 2 % kNN Connectivity Matrix
             scatter(points(:,1), points(:,2));
             [G] = kNNConGraph(points,10);
@@ -70,10 +71,8 @@ function [W,S,G,x_spec] = benchmarkingScript(points,K)
             [S] = chooseSimFun(points);
             W = sparse(S .* G);
             spy(W)
-%             if (det(W) ~= 0)
             x_spec = plotter(W, K, points);
-%             end
-            
+
         elseif connGraph == 3 % mkNN Connectivity Matrix
             scatter(points(:,1), points(:,2));
             [G] = mkNNConGraph(points,10);
@@ -85,9 +84,7 @@ function [W,S,G,x_spec] = benchmarkingScript(points,K)
             [S] = chooseSimFun(points);
             W = sparse(S .* G);
             spy(W)
-%             if (det(W) ~= 0)
             x_spec = plotter(W, K, points);
-%             end
             
         elseif connGraph == 4 % CNN Connectivity Matrix
             % TODO
