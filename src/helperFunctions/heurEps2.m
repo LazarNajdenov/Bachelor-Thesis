@@ -1,6 +1,5 @@
 function epsilon = heurEps2(Pts)
     tic
-
     mean_d = 0;
     mean_n = 0;
     min_d = inf;
@@ -23,11 +22,11 @@ function epsilon = heurEps2(Pts)
         if max_n < nearest_dist, max_n = nearest_dist; end
     end
 
-    mean_d = mean_d/(2*nchoosek(n, 2));
+    mean_d = mean_d/(n*(n-1));
     mean_n = mean_n/n;
 
-    epsilon = 20*mean_d + 54*min_d + 13*max_n - 6*max_d - 65*mean_n; 
+    epsilon = 0.2 * mean_d + 0.54 * min_d + 1.3 * max_n - 0.06 * max_d - 0.65 * mean_n;
     
-    timeElapsed = toc;
+    elapsedtime = toc
 end
 

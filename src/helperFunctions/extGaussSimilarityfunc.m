@@ -14,7 +14,6 @@ for i = 1:n
      Sigma(i) = S(index(kNN),i);
 end
 Sigma_mat = repmat(Sigma,1,n);
-Sigma_mat = max(Sigma_mat, Sigma_mat');
 S = exp(-S.^2 ./ (2*(Sigma_mat * Sigma_mat')));
 
 end

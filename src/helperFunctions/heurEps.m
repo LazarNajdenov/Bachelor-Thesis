@@ -18,8 +18,8 @@ function epsilon = heurEps(points)
     % Mean of distances between each data point and its nearest neighbor
     mean_n = mean(distNN);
     % Heuristic of Epsilon value, for the epsilon similarity graph
-    epsilon = 20 * mean_d + 54 * min_d + 13 * max_n - 6 * max_d - 65 * mean_n;
+    epsilon = 0.2 * mean_d + 0.54 * min_d + 0.13 * max_n - 0.06 * max_d - 0.65 * mean_n;
     
-    timeElapsed = toc;
+    timeElapsed = toc
 end
 

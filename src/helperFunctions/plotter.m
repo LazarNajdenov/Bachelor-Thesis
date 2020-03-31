@@ -27,7 +27,7 @@ function [x_spec] = plotter(W, K, Pts)
 
  
 %     % EigenVector Computation wih eigs
-%     [V,~] = eigs(L, K, 'smallestabs'); 
+%     [V,~] = eigs(L, K, 'SA'); 
 
 
 %   % Eigenvector computation with eig   
@@ -42,16 +42,20 @@ function [x_spec] = plotter(W, K, Pts)
     V = Vs(:,1:K);
       
 
-%     % EigenVector plot
-%     figure(3)
-%     plot(W,V(:,[2,3]));
+%     % EigenVector and nodal plot
+%     figure(1)
+%     subplot(1,2,1)
+%     gplot(W, Pts);
+%     xlabel('Nodal coordinates')
+%     subplot(1,2,2)
+%     gplot(W, V(:,1:K));
 %     xlabel('Eigenvector coordinates')
 
 %     % Cluster rows of eigenvector matrix of L corresponding to K smallest
 %     % eigenvalues. Use kmeans for that.
     [~,x_spec] = kmeans_mod(V,K,n);
-%     figure
-%     gplotmap(W,Pts,x_spec)
-%     title('Spectral clustering result')
+    figure(2)
+    gplotmap(W,Pts,x_spec)
+    title('Spectral clustering result')
 
 end
