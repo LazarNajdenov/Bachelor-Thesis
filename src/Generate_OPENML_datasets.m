@@ -1,4 +1,6 @@
 % Generate adjacencies matrices for OPENML datasets
+clc;
+close all;
 
 case_name = 'ecoli';
 
@@ -42,9 +44,14 @@ nrows         = size(W,1);
 fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
     nrows, nonzero, nonzero/nrows);
 
+[x_inferred, inferred_label] = label_data(x_spec, label);
+[confusion, ACC, Rcut, RCCut] = evaluate_clusters(label, x_inferred, x_spec, W, 1);
+
 if(~strcmp(mat_name, "NULL"))
     save(mat_name,'W','label','x_spec')
 end
+
+
 
 
 

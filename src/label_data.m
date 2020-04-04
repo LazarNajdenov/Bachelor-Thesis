@@ -15,15 +15,25 @@ else
     %    x = x-1;
 end
 
+% Set to -1 the vector of the inferred_label
 inferred_label = -1*ones(K,1);
 
-x_inferred = x;
+% Set at the beginning the interpreted solutions according to the
+% clustering result
+x_inferred     = x;
 
 for k=1:K
-    index        = find(x==k);
-    cur_labels   = labels(index);
-    actual_label = mode(cur_labels);
-    inferred_label(k)= actual_label;
+    % Find the indices of all values of the clustering results 
+    % that are equal to k    
+    index             = find(x==k);
+    % Take out from the real label, the labels at the given indices    
+    cur_labels        = labels(index);
+    % Compute the mode of the labels taken out, and the most frequent label 
+    % will be the actual one    
+    actual_label      = mode(cur_labels);
+    % Assign at position k of the inferred_label the actual one computed     
+    inferred_label(k) = actual_label;
+    % Set at the indices of the interpeted solution the actual label     
     x_inferred(index) = actual_label;
 end
 

@@ -25,7 +25,7 @@ function [W,S,G,x_spec] = benchmarkingScript(points, K)
 %   
 
 %     if nargin < 1
-%         K = 4;
+%         K = 2;
 %     end
     
     warning off
@@ -33,22 +33,13 @@ function [W,S,G,x_spec] = benchmarkingScript(points, K)
     addpath helperFunctions/
     addpath helperFunctions/wgPlot/
    
-%     [~,~,~,~,~,points] = getPoints();
+%     [points,~,~,~,~,~] = getPoints();
     
     done = false;
     while (~done)
         connGraph = input('Choose the type of connectivity matrix construction G \n');
         if connGraph == 1 % Epsilon Connectivity Matrix
-            scatter(points(:,1), points(:,2));
-%             [S] = gaussSimilarityfunc(points);
-            
-            % Find the minimal spanning tree of the full graph
-            % in order to determine epsilon,that is the length of the longest
-            % edge in a minimal spanning tree of the fully connected graph 
-            % on the data points.
-%             minimalSpanningTree = minSpanTree(S);
-%             epsilon = max(max(minimalSpanningTree));
-            
+
             epsilon = heurEps2(points);
             
             [G] = USI_epsilonSimGraph(epsilon,points);
@@ -64,7 +55,7 @@ function [W,S,G,x_spec] = benchmarkingScript(points, K)
             x_spec = plotter(W, K, points);
         
         elseif connGraph == 2 % kNN Connectivity Matrix
-            scatter(points(:,1), points(:,2));
+            
             [G] = kNNConGraph(points,10);
             
             if not(isConnected(G))
@@ -77,7 +68,7 @@ function [W,S,G,x_spec] = benchmarkingScript(points, K)
             x_spec = plotter(W, K, points);
 
         elseif connGraph == 3 % mkNN Connectivity Matrix
-            scatter(points(:,1), points(:,2));
+            
             [G] = mkNNConGraph(points,10);
             
             if not(isConnected(G))

@@ -1,12 +1,12 @@
-function [S] = extGaussSimilarityfunc(Pts,kNN)
+function [S] = scaledGaussSimilarityfunc(Pts,kNN)
 % Create the similarity matrix S 
 n = length(Pts(:,1));
 
 Sigma = zeros(n,1);
 
-fprintf('----------------------------\n');
-fprintf('Gaussian similarity function\n');
-fprintf('----------------------------\n');
+fprintf('-----------------------------------\n');
+fprintf('Scaled Gaussian similarity function\n');
+fprintf('-----------------------------------\n');
 S = squareform(pdist(Pts));
 
 for i = 1:n

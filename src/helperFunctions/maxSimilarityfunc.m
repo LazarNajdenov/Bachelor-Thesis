@@ -11,9 +11,9 @@ n = length(Pts(:,1));
 
 Sigma = zeros(n,1);
 
-fprintf('----------------------------\n');
-fprintf('Gaussian similarity function\n');
-fprintf('----------------------------\n');
+fprintf('--------------------------------\n');
+fprintf('Max Gaussian similarity function\n');
+fprintf('--------------------------------\n');
 S = squareform(pdist(Pts));
 
 for i = 1:n
