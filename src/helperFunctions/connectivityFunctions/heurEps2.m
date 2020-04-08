@@ -12,7 +12,7 @@ function epsilon = heurEps2(Pts)
         nearest_dist = inf;
         for j=1:n
             if i == j, continue; end
-            dist = sqrt(sum((Pts(j,:) - Pts(i,:)).^2));
+            dist = norm(Pts(j,:) - Pts(i,:));
             mean_d = mean_d + dist;
             if min_d > dist, min_d = dist; end
             if max_d < dist, max_d = dist; end
@@ -25,7 +25,7 @@ function epsilon = heurEps2(Pts)
     mean_d = mean_d/(n*(n-1));
     mean_n = mean_n/n;
 
-    epsilon = 0.2 * mean_d + 0.54 * min_d + 1.3 * max_n - 0.06 * max_d - 0.65 * mean_n;
+    epsilon = 20 * mean_d + 65 * min_d + 13 * max_n - 6 * max_d - 65 * mean_n;
     
     elapsedtime = toc
 end

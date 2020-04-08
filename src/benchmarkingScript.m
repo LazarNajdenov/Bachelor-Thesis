@@ -34,6 +34,7 @@ function [W,S,G,x_spec, connected] = benchmarkingScript(points, K)
     addpath helperFunctions/connectivityFunctions/
     addpath helperFunctions/similarityFunctions/
     addpath helperFunctions/plottingFunctions/
+    
    
     done = false;
     while (~done)
@@ -54,13 +55,13 @@ function [W,S,G,x_spec, connected] = benchmarkingScript(points, K)
             end
             
             connected = 1;
-            [S] = chooseSimFun(points);
+            [S] = chooseSimFun(points, epsilon);
             W = sparse(S .* G);
             [L, V, x_spec] = clusterRows(W, K);
             plotter(W, points, L, V, x_spec);
         
         elseif connGraph == 2 % kNN Connectivity Matrix
-            
+            epsilon = heurEps2(points);
             [G] = kNNConGraph(points,10);
             
             if not(isConnected(G))
@@ -73,13 +74,13 @@ function [W,S,G,x_spec, connected] = benchmarkingScript(points, K)
             end
             
             connected = 1;
-            [S] = chooseSimFun(points);
+            [S] = chooseSimFun(points, epsilon);
             W = sparse(S .* G);
             [L, V, x_spec] = clusterRows(W, K);
             plotter(W, points, L, V, x_spec);
             
         elseif connGraph == 3 % mkNN Connectivity Matrix
-            
+            epsilon = heurEps2(points);
             [G] = mkNNConGraph(points,10);
             
             if not(isConnected(G))
@@ -92,7 +93,7 @@ function [W,S,G,x_spec, connected] = benchmarkingScript(points, K)
             end
             
             connected = 1;
-            [S] = chooseSimFun(points);
+            [S] = chooseSimFun(points, epsilon);
             W = sparse(S .* G);
             [L, V, x_spec] = clusterRows(W, K);
             plotter(W, points, L, V, x_spec);

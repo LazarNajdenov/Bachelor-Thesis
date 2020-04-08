@@ -1,4 +1,4 @@
-function S = chooseSimFun(Pts)
+function S = chooseSimFun(Pts, epsilon)
 % An helper function that chooses which similarity function to use.
 %
 % INPUT:
@@ -19,8 +19,7 @@ function S = chooseSimFun(Pts)
         elseif sim == 3 % Extended Gaussian Similarity Matrix
             S = scaledGaussSimilarityfunc(Pts,10);
         elseif sim == 4 % CNN Similarity Matrix
-            % TODO CNN  
-            fprintf('To be done\n');
+            S = commonNearNeighborSimilarityFunc(Pts, epsilon);
         else
             fprintf('Please choose a number from 1 to 4\n');
             continue;
