@@ -9,6 +9,6 @@ function [S] = commonNearNeighborSimilarityFunc(Pts, epsilon)
     
     % Compute Euclidean Distance between points     
     S = squareform(pdist(Pts));
-    % Compute Common Near Neighbor     
+    % Compute Common Near Neighbor similarity function    
     S = exp(-S.^2 ./ (2*sigma^2 .* (computeCNN(S, epsilon) + 1)));
 end
