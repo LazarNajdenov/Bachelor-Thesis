@@ -1,4 +1,4 @@
-function [L, V, x_spec] = clusterRows(W, K)
+function [L, V, x_spec, P] = clusterRows(W, K)
 % Function that clusters rows of eigenvector matrix of the laplacian matrix
 % L which can be, depending on the input given:
 %   - unnormalized, if input = 1 
@@ -36,7 +36,8 @@ while ~done
         [V,~]    = eigs(L, K, 'SA'); 
         
         % Cluster rows of eigenvector matrix of L 
-        [~,x_spec] = kmeans_mod(V,K,n);
+        %[~, x_spec] = kmeans_mod(V,K,n);
+        x_spec = kmeans(V,K,'Display', 'final','Replicates', 10);
         
     elseif laplacian == 2 % Symmetric Normalized Laplacian
         
@@ -48,15 +49,20 @@ while ~done
         [V,~] = eigs(L, K, 'SA'); 
         
         % Cluster rows of eigenvector matrix of L
-        [~,x_spec] = kmeans_mod(V,K,n);
+        x_spec = kmeans(V,K,'Display', 'final','Replicates', 10);
         
     elseif laplacian == 3 % Random-Walk Laplacian
         
         % Construct random-walk laplacian
-        [V,~]    = eigs(L, Diag, K, 'SA');
+        beta  = 1;
+        n     = size(W,1);
+        I     = speye(n);
+        P     = Diag^(-beta) * W;
+        L     = I - P;
+        [V,~] = eigs(L, K, 'SA');
         
         % Cluster rows of eigenvector matrix of L
-        [~,x_spec] = kmeans_mod(V,K,n);
+        x_spec = kmeans(V,K,'Display', 'final','Replicates', 10);
         
     else
         fprintf('You have to choose a number from 1 to 3\n');
