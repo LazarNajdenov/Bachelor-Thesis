@@ -2,7 +2,8 @@ function plotter(W, Pts, L, V, x_spec)
 % An helper function that plots:
 %   - the Laplacian matrix,
 %   - the eigenvector representation of the graph taken from the Laplacian,
-%   - the spectral clustering results
+%   - the spectral clustering results,
+%   - plots the weighted graph from the adjacency matrix and vertices coordinate
 % 
 % INPUT:
 %   - Adjacency matrix W

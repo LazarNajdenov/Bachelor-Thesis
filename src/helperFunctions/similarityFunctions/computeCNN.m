@@ -1,8 +1,13 @@
 function [cnn] = computeCNN(S,epsilon)
-% COMPUTECNN : computes the number of common near neighbors between every
-% data point of the dataset
-% cnn = computeCNN(S, epsilon) returns a matrix with the number of cnn
-%     between every pair of data
+% COMPUTECNN computes the number of common near neighbors(cnn) between 
+%            every data point of the dataset.
+% 
+% Input
+% S:       matrix containing all the euclidean distances between every pair
+% epsilon: radius of the epsilon-neighorhood
+% Output
+% cnn: matrix with the number of cnn between every pair of data
+
     cnn = zeros(size(S));
     n = size(S,1);
     for i = 1 : n
