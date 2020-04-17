@@ -1,6 +1,6 @@
 function [Confusion,ACC,RCut,RCCut] = evaluate_clusters(labels,inferred_labels,clusters,W,printflag, blackBox)
 
-    normalized = false;
+    normalized = true;
 
     n = length(labels);
 

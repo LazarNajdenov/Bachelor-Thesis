@@ -26,7 +26,7 @@ function epsilon = heurEps2(Pts)
     mean_n = mean_n/n;
 
     epsilon = 20 * mean_d + 65 * min_d + 13 * max_n - 6 * max_d - 65 * mean_n;
-    
+    epsilon = (log(n)/n)^d;
     elapsedtime = toc
 end
 

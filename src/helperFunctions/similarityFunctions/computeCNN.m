@@ -11,10 +11,10 @@ function [cnn] = computeCNN(S,epsilon)
     cnn = zeros(size(S));
     n = size(S,1);
     for i = 1 : n
+        % Find the indices of all the elements within radius epsilon of 
+        % point i    
+        a = find(S(i,:) <= epsilon);
         for j = i + 1 : n
-            % Find the indices of all the elements within radius epsilon of 
-            % point i            
-            a = find(S(i,:) <= epsilon);
             % Find the indices of all the elements within radius epsilon of
             % point j
             b = find(S(j,:) <= epsilon);
