@@ -1,6 +1,5 @@
-function [Confusion,ACC,RCut,RCCut] = evaluate_clusters(labels,inferred_labels,clusters,W,printflag, blackBox)
-
-    normalized = true;
+function [Confusion,ACC,RCut] = evaluate_clusters(labels,inferred_labels,clusters,W,...
+                                printflag, blackBox, normalized)
 
     n = length(labels);
 
@@ -15,7 +14,7 @@ function [Confusion,ACC,RCut,RCCut] = evaluate_clusters(labels,inferred_labels,c
 
     %  Ratio Cut and Ratio Cheeger Cut
     if ~blackBox
-        [RCut,RCCut] = computeRCutValue(clusters,W,normalized);
+        [RCut] = computeRCutValue(clusters,W,normalized);
     end
 
 
@@ -26,7 +25,11 @@ function [Confusion,ACC,RCut,RCCut] = evaluate_clusters(labels,inferred_labels,c
         fprintf(fmt, Confusion.');
         fprintf('---------------------\n');
         if ~blackBox
-            fprintf('ACC = %f, RCut = %f, RCCut = %f\n', ACC,RCut, RCCut);      
+            if normalized == 1
+                fprintf('ACC = %f, RCut = %f\n', ACC,RCut);
+            else 
+                fprintf('ACC = %f, NCut = %f\n', ACC,RCut);
+            end
         else 
             fprintf('ACC = %f\n', ACC);
         end

@@ -39,8 +39,8 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
             if ~isConnected(G), error('The graph is not connected'); end
             S                 = commonNearNeighborSimilarityFunc(Pts, epsilon);
             W                 = sparse(S .* G);
-            [L, V, x_spec, ~] = clusterRows(W, K, laplMat);
-            plotter(W, Pts, L, V, x_spec);
+            [L, V, x_spec, P] = clusterRows(W, K, laplMat);
+            plotter(W, Pts, P, V, x_spec);
         else
             % Generate Connectivity matrix G
             G                 = chooseConnFun(Pts, connFun);
@@ -64,10 +64,10 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         
         % Evaluate clustering results, by computing confusion matrix, 
         % accuracy and RatioCut, NormalizedCut     
-        evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox);
+        evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox, laplMat);
         
-        matName                       = strcat(caseName);
-        matName                       = strcat(matName,'_results.mat');
+        matName          = strcat(caseName);
+        matName          = strcat(matName,'_results.mat');
 
         if(~strcmp(matName, "NULL"))
             save(matName,'W','label','x_spec')

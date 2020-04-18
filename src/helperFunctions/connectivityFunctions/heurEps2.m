@@ -1,5 +1,9 @@
 function epsilon = heurEps2(Pts)
-    tic
+% HEUREPS2 Returns the heuristic value epsilon for the epsilon-neighborhood
+% Input
+% Pts: points of the dataset with respective features
+% Output
+% epsilon: the value for the epsilon-neighoborhood
     mean_d = 0;
     mean_n = 0;
     min_d = inf;
@@ -26,7 +30,5 @@ function epsilon = heurEps2(Pts)
     mean_n = mean_n/n;
 
     epsilon = 20 * mean_d + 65 * min_d + 13 * max_n - 6 * max_d - 65 * mean_n;
-    epsilon = (log(n)/n)^d;
-    elapsedtime = toc
 end
 

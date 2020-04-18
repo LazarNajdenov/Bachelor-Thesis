@@ -13,6 +13,10 @@ function [L, V, x_spec, P] = clusterRows(W, K, laplMat)
 % L    : Laplacian
 % V    : K smallest eigenvectors
 
+    if nargout > 3
+        P = [];
+    end
+    
     % Degree matrix
     Diag = zeros(size(W,1));
     for i = 1:size(W,1)
@@ -40,11 +44,12 @@ function [L, V, x_spec, P] = clusterRows(W, K, laplMat)
         n      = size(W,1);
         I      = speye(n);
         P      = Diag^(-beta) * W;
-        L      = I - Diag^(-beta) * W;
+        L      = I - P;
         [V,~]  = eigs(L, K, 'SA');
         x_spec = kmeans(V, K,'Display', 'final','Replicates', 10);
         
     else
         error('Please choose a number from 1 to 3');
     end
+    
 end
