@@ -34,12 +34,21 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         
     else
         if connFun == 1 && simFun == 4 && laplMat == 3
+            % Generate Connectivity matrix G
             epsilon           = heurEps2(Pts);
             G                 = USI_epsilonSimGraph(epsilon,Pts);
             if ~isConnected(G), error('The graph is not connected'); end
+            % Generate Similarity matrix S
             S                 = commonNearNeighborSimilarityFunc(Pts, epsilon);
+            % Generate Adjacency matrix W
             W                 = sparse(S .* G);
-            [L, V, x_spec, P] = clusterRows(W, K, laplMat);
+            nonzero           = nnz(W);
+            nrows             = size(W,1);
+            fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
+                    nrows, nonzero, nonzero/nrows);
+            % Generate Laplacian, K smallest eigenvectors, clustering results  
+            [~, V, x_spec, P] = clusterRows(W, K, laplMat);
+            % Plot the results
             plotter(W, Pts, P, V, x_spec);
         else
             % Generate Connectivity matrix G

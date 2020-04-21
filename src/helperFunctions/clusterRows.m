@@ -14,7 +14,7 @@ function [L, V, x_spec, P] = clusterRows(W, K, laplMat)
 % V    : K smallest eigenvectors
 
     if nargout > 3
-        P = [];
+        P = zeros(size(W));
     end
     
     % Degree matrix
