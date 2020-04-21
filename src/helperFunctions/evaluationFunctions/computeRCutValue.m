@@ -1,7 +1,7 @@
 function [RCut] = computeRCutValue(clusters,W,normalized)
 % Computes the components in the Ratio/Normalized Cut expression.
 %
-% Usage: [RCut,RCCut] = computeCutValue(clusters,W,normalized)
+% Usage: [RCut] = computeCutValue(clusters,W,normalized)
 
     K     = max(clusters);
     RCut  = 0;

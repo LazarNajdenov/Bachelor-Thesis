@@ -12,9 +12,10 @@ function [Confusion,ACC,RCut] = evaluate_clusters(labels,inferred_labels,cluster
     ACC  = hits/n;
 
 
-    %  Ratio Cut and Ratio Cheeger Cut
+    %  Compute Ratio Cut or Normalized Cut, and Modularity
     if ~blackBox
         [RCut] = computeRCutValue(clusters,W,normalized);
+        [Q] = QFModul(clusters, W);
     end
 
 
@@ -26,9 +27,9 @@ function [Confusion,ACC,RCut] = evaluate_clusters(labels,inferred_labels,cluster
         fprintf('---------------------\n');
         if ~blackBox
             if normalized == 1
-                fprintf('ACC = %f, RCut = %f\n', ACC,RCut);
+                fprintf('ACC = %f, RCut = %f, Modularity = %f\n', ACC,RCut, Q);
             else 
-                fprintf('ACC = %f, NCut = %f\n', ACC,RCut);
+                fprintf('ACC = %f, NCut = %f, Modularity = %f\n', ACC,RCut, Q);
             end
         else 
             fprintf('ACC = %f\n', ACC);

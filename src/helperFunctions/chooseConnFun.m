@@ -13,12 +13,11 @@ function [G] = chooseConnFun(Pts, connFun)
 % G:      connectivity matrix
 
     % Epsilon-neighborhood Connectivity Matrix
-    if     connFun == 1, epsilon = heurEps2(Pts);
+    if     connFun == 1, epsilon = heurEps3(Pts);
                          G = USI_epsilonSimGraph(epsilon,Pts);
     % kNN Connectivity Matrix
     elseif connFun == 2, G = kNNConGraph(Pts,10);
     % mkNN Connectivity Matrix
     elseif connFun == 3, G = mkNNConGraph(Pts,10);
-    else, error('Please choose a number from 1 to 3'); 
     end
 end
