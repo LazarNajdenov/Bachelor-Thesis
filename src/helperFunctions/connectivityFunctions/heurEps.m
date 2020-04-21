@@ -1,5 +1,10 @@
 function epsilon = heurEps(points)
-    tic
+% HEUREPS Returns the heuristic value epsilon for the epsilon-neighborhood
+% Input
+% Pts: points of the dataset with respective features
+% Output
+% epsilon: the value for the epsilon-neighoborhood
+    
     % Compute Euclidean Distance between all pairs of data points 
     P = squareform(pdist(points));
     UpMatrix = P(triu(true(size(P)),1));
@@ -19,7 +24,5 @@ function epsilon = heurEps(points)
     mean_n = mean(distNN);
     % Heuristic of Epsilon value, for the epsilon similarity graph
     epsilon = 0.2 * mean_d + 0.54 * min_d + 0.13 * max_n - 0.06 * max_d - 0.65 * mean_n;
-    
-    timeElapsed = toc
 end
 

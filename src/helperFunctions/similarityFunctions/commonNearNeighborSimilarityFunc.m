@@ -1,4 +1,6 @@
 function [S] = commonNearNeighborSimilarityFunc(Pts, epsilon)
+% COMMONNEARNEIGHBORSIMILARITYFUNC create similarity matrix S, based on 
+% local density adaptive similarity measure
 
     n = length(Pts(:,1));
     sigma = 2*log(n);

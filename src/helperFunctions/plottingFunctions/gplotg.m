@@ -46,12 +46,11 @@ X = X(:);
 Y = Y(:);
 
 if size(xy,2) == 2
-    h = plot (X, Y, lc, 'erasemode', 'none');
+    h = plot (X, Y, lc);
 else
-    set(gca,'drawmode','fast');
     Z = [ xy(i,3) xy(j,3) NaN*ones(size(i))]';
     Z = Z(:);
-    h = plot3 (X, Y, Z, lc, 'erasemode', 'none');
+    h = plot3 (X, Y, Z, lc);
 end;
 
 axis equal;
