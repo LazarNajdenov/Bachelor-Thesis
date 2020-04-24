@@ -1,4 +1,4 @@
-function S = chooseSimFun(Pts, simFun)
+function S = chooseSimFun(Pts, simFun, kNN)
 % CHOOSESIMFUN an helper function that chooses which similarity function 
 % to use, and return the relative Similarity Matrix
 %
@@ -14,9 +14,9 @@ function S = chooseSimFun(Pts, simFun)
     % Gaussian Similarity Matrix
     if     simFun == 1, S = gaussSimilarityfunc(Pts);
     % Max Similarity Matrix
-    elseif simFun == 2, S = maxSimilarityfunc(Pts,10);
+    elseif simFun == 2, S = maxSimilarityfunc(Pts,kNN);
     % Extended Gaussian Similarity Matrix
-    elseif simFun == 3, S = scaledGaussSimilarityfunc(Pts,10);
+    elseif simFun == 3, S = scaledGaussSimilarityfunc(Pts,kNN);
     end
         
 end

@@ -16,6 +16,7 @@ function [L_sym, V] = symmLapl(W,K)
     d        = diag(1./sqrt(Diag));
     DiagHalf = Diag + diag(d - diag(Diag));
     L_sym    = DiagHalf * L * DiagHalf;
+    L_sym    = (L_sym + L_sym')./2;
     [V,~]    = eigs(L_sym, K, 'SA');
 end
 

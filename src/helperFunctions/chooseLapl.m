@@ -14,7 +14,7 @@ function [L, V, P] = chooseLapl(W, K, laplMat)
 % V      : K smallest eigenvectors
 % P      : Transition probability matrix(Diffusion matrix)
 
-    if nargout > 3,      P = zeros(size(W)); end
+    if nargout > 2,      P = zeros(size(W)); end
     % Unnormalized Laplacian
     if laplMat == 1,     [L, V] = unnormLapl(W, K);
     % Symmetric Normalized Laplacian

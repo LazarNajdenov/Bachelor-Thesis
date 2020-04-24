@@ -55,7 +55,7 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         
     else
         if connFun == 1 && simFun == 4 && laplMat == 3
-            
+            rng(0);
             epsilon           = heurEps3(Pts);
             G                 = USI_epsilonSimGraph(epsilon,Pts);
             if ~isConnected(G), error('The graph is not connected'); end
@@ -70,10 +70,10 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
             plotter(W, Pts, P, V, x_spec);
             
         else
-            
-            G                 = chooseConnFun(Pts, connFun);
+            rng(0);
+            [G, kNN]          = chooseConnFun(Pts, connFun);
             if ~isConnected(G), error('The graph is not connected'); end
-            S                 = chooseSimFun(Pts, simFun);
+            S                 = chooseSimFun(Pts, simFun, kNN);
             W                 = sparse(S .* G);
             nonzero           = nnz(W);
             nrows             = size(W,1);
