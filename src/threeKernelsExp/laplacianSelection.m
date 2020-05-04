@@ -1,3 +1,10 @@
+% For 1 dataset with increasing size, select the average ACC after each 
+% run (each run means different dataset size), and put them in a vector. 
+% Vector of size 10, for safe comparison. Fix rng seed. Then plot with box 
+% plot. We expect fewer outliers in the case of L_rw.
+
+
+
 % Script for comparing the accuracy and the cut got of the spectral clustering 
 % results for a given dataset, after running k-means 10 times, 
 % depending on the different Laplacian given
@@ -18,10 +25,10 @@ caseName        = 'ecoli';
 [Pts, label, K] = Generate_OPENML_datasets(caseName);
 %% Use connectivity and similarity function to generate adjacency matrix
 connFun         = 2;
-G               = chooseConnFun(Pts, connFun);
+[G, kNN]               = chooseConnFun(Pts, connFun);
 if ~isConnected(G), error('The graph is not connected'); end
 simFun          = 2;
-S               = chooseSimFun(Pts, simFun);
+S               = chooseSimFun(Pts, simFun, kNN);
 W               = sparse(S .* G);
 %% Compute different Laplacians
 [~, V1, ~]       = chooseLapl(W, K, 1);
@@ -45,7 +52,3 @@ figure(2);
 boxplot([cut2, cut3],{'Symmetric', 'RandomWalk'},'Orientation','horizontal');
 xlabel('Laplacians')
 ylabel('Normalized Cuts')
-figure(3);
-boxplot([modul1, modul2, modul3],{'Unnormalized','Symmetric', 'RandomWalk'},'Orientation','horizontal');
-xlabel('Laplacians')
-ylabel('Modularity')

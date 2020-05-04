@@ -33,7 +33,7 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
     addpath helperFunctions/evaluationFunctions/
     addpath helperFunctions/similarityFunctions/
     addpath helperFunctions/connectivityFunctions/
-    
+    addpath datasets/
     
     if nargin < 5, laplMat  = 3; end
     if nargin < 4, simFun   = 4; end
@@ -55,8 +55,7 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         
     else
         if connFun == 1 && simFun == 4 && laplMat == 3
-            rng(0);
-            epsilon           = heurEps3(Pts);
+            epsilon           = heurEps2(Pts);
             G                 = USI_epsilonSimGraph(epsilon,Pts);
             if ~isConnected(G), error('The graph is not connected'); end
             S                 = commonNearNeighborSimilarityFunc(Pts, epsilon);
@@ -70,7 +69,6 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
             plotter(W, Pts, P, V, x_spec);
             
         else
-            rng(0);
             [G, kNN]          = chooseConnFun(Pts, connFun);
             if ~isConnected(G), error('The graph is not connected'); end
             S                 = chooseSimFun(Pts, simFun, kNN);

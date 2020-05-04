@@ -1,3 +1,6 @@
+% IMPORTANT!!! Fine Tuning Step, use it lastly with the modularity
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+
 % Script for comparing the accuracy, Rcut or Ncut, and the modularity got 
 % from spectral clustering results for a given dataset, depending on the 
 % the different RandomWalk Laplacians for beta values ranging from 1 to 2.
@@ -19,16 +22,17 @@ betas = {'beta = 1','beta = 1.1','beta = 1.2', 'beta = 1.3','beta = 1.4'...
 caseName        = 'ecoli';
 [Pts, label, K] = Generate_OPENML_datasets(caseName);
 %% Use connectivity and similarity function to generate adjacency matrix
-connFun         = 1;
-G               = chooseConnFun(Pts, connFun);
+connFun         = 2;
+[G, kNN]        = chooseConnFun(Pts, connFun);
 if ~isConnected(G), error('The graph is not connected'); end
-simFun          = 1;
-S               = chooseSimFun(Pts, simFun);
+simFun          = 2;
+S               = chooseSimFun(Pts, simFun, kNN);
 W               = sparse(S .* G);
 %% Compute Random-walk Laplacian with beta going from 1 to 2 
 %  with step size 0.1, and compute accuracies, cuts and modularities for 
 %  different betas, and plot the minimum, the maximum, the sample median, 
 %  and the first and third quartiles.
+
 % For reproducibility
 rng(0);
 [acc, cut, modul] = computeAccCutModulBeta(W, K, label, 3);
