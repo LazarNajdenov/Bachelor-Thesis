@@ -2,11 +2,11 @@ function [accuracy, cuts, modularity] = computeAccCutModulBeta(W, K, label, lapl
 % COMPUTEACCCUTMODULBETA compute accuracy, cuts, and modularity of
 % different clustering results which depend on different values of beta 
 % ranging from 1 to 2 for constructing the Random-Walk Laplacian
-    x_results       = zeros(size(W, 1), 11);
-    x_inferred      = zeros(size(W, 1), 11);
-    accuracy        = zeros(11,1);
-    cuts            = zeros(11,1);
-    modularity      = zeros(11,1);
+    x_results       = zeros(size(W, 1), 10);
+    x_inferred      = zeros(size(W, 1), 10);
+    accuracy        = zeros(10,1);
+    cuts            = zeros(10,1);
+    modularity      = zeros(10,1);
     beta = 1;
     i = 1;
     while beta <= 2

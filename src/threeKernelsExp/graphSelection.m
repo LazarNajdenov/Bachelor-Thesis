@@ -27,7 +27,7 @@ addpath ../helperFunctions/connectivityFunctions/
 
 
 % Retrieve the datapoints and the labels for the given dataset
-data = three_kernels(1000);
+data = three_kernels(1250);
 Pts  = data(:, 1:3);
 data_labels = data(:, 3);
 % Compute unique values of the labels with no repetition
@@ -39,18 +39,16 @@ epsilon = heurEps3(Pts);
 G = USI_epsilonSimGraph(epsilon, Pts);
 if ~isConnected(G), error('The graph is not connected'); end
 S = chooseSimFun(Pts, 1, 0);
-W1 = (S .* G);
+W1 = sparse(S .* G);
 %% Compute kNN with Max Gaussian similarity
+% Choose kNN = 20
 [G2, kNN] = chooseConnFun(Pts, 2);
 if ~isConnected(G2), error('The graph is not connected'); end
 S2 = chooseSimFun(Pts, 2, kNN);
-W2 = (S2 .* G2);
+W2 = sparse(S2 .* G2);
 %% Compute CNN 
-epsilon = heurEps3(Pts);
-G3 = USI_epsilonSimGraph(epsilon, Pts);
-if ~isConnected(G3), error('The graph is not connected'); end
 S3 = commonNearNeighborSimilarityFunc(Pts, epsilon);
-W3 = (S3 .* G3);
+W3 = sparse(S3 .* G);
 %% Weight Plots
 figure;
 wgPlot(W1,Pts,'edgeColorMap',jet,'edgeWidth',1);
@@ -64,10 +62,11 @@ wgPlot(W3,Pts,'edgeColorMap',jet,'edgeWidth',1);
 [L3, V3, ~] = chooseLapl(W3, K, 1);
 %% Compute accuracies, cuts and modularities for 10 iterations and plot the distribution
 
-rng(0);
-[~, ~, mAcc1, mCuts1] = computeAccCutModul(W1, V1, K, data_labels,3);
-[~, ~, mAcc2, mCuts2] = computeAccCutModul(W2, V2, K, data_labels,3);
-[~, ~, mAcc3, mCuts3] = computeAccCutModul(W3, V3, K, data_labels,3);
+% For reproducibility
+rng('default');
+[~, ~, mAcc1, mCut1] = computeAccCutModul(W1, V1, K, data_labels,1);
+[~, ~, mAcc2, mCut2] = computeAccCutModul(W2, V2, K, data_labels,1);
+[~, ~, mAcc3, mCut3] = computeAccCutModul(W3, V3, K, data_labels,1);
 
 % p = max(max(acc2),max(cut2));
 % h1 = figure;
@@ -81,7 +80,7 @@ rng(0);
 % legend
 % hold off
 img = figure;
-y = [mAcc1, mCuts1; mAcc2, mCuts2; mAcc3, mCuts3];
+y = [mAcc1, mCut1; mAcc2, mCut2; mAcc3, mCut3];
 x = categorical({'Eps-Gauss','kNN-Max','Eps-CNN'});
 x = reordercats(x,{'Eps-Gauss','kNN-Max','Eps-CNN'});
 b = bar(x,y);
@@ -89,7 +88,7 @@ lgd = legend('Accuracy', 'Ratio');
 lgd.FontSize = 15;
 lgd.Title.String = 'Legend BarPlot';
 limit = max(max(y(:,1)),max(y(:,2)));
-ylim([0 limit+0.3]);
+ylim([0 limit+2]);
 xtips1 = b(1).XEndPoints;
 ytips1 = b(1).YEndPoints;
 labels1 = string(b(1).YData);
