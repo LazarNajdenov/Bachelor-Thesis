@@ -25,15 +25,26 @@ addpath ../helperFunctions/evaluationFunctions/
 addpath ../helperFunctions/similarityFunctions/
 addpath ../helperFunctions/connectivityFunctions/
 
-
+load ../Jain2.mat
 % Retrieve the datapoints and the labels for the given dataset
-data = three_kernels(1250);
-Pts  = data(:, 1:3);
+data = three_kernels(2500);
+Pts  = data(:, 1:2);
 data_labels = data(:, 3);
 % Compute unique values of the labels with no repetition
 unique_labels = unique(data_labels);
 % Compute the number of unique labels
 K = size(unique_labels,1);
+
+Pts = double(Pts);
+n = size(Pts,1);
+label = zeros(n,1);
+
+% Returns the labels normalized(from 0 to n)
+for i = 1:n
+    % Returns the index of the array unique_labels that matches the value i 
+    % of the original data_label
+    label(i)  = find(unique_labels == data_labels(i))-1; %0 based labels
+end
 %% Compute Epsilon connectivity with Gaussian similarity
 epsilon = heurEps3(Pts);
 G = USI_epsilonSimGraph(epsilon, Pts);
@@ -64,9 +75,9 @@ wgPlot(W3,Pts,'edgeColorMap',jet,'edgeWidth',1);
 
 % For reproducibility
 rng('default');
-[~, ~, mAcc1, mCut1] = computeAccCutModul(W1, V1, K, data_labels,1);
-[~, ~, mAcc2, mCut2] = computeAccCutModul(W2, V2, K, data_labels,1);
-[~, ~, mAcc3, mCut3] = computeAccCutModul(W3, V3, K, data_labels,1);
+[~, ~, mAcc1, mCut1] = computeAccCutModul(W1, V1, K, label,1);
+[~, ~, mAcc2, mCut2] = computeAccCutModul(W2, V2, K, label,1);
+[~, ~, mAcc3, mCut3] = computeAccCutModul(W3, V3, K, label,1);
 
 % p = max(max(acc2),max(cut2));
 % h1 = figure;

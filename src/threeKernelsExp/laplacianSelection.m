@@ -27,8 +27,6 @@ addpath ../helperFunctions/connectivityFunctions/
 rng('default');
 % Initial dataset size
 n = 250;
-% We already know there are 3 clusters
-K = 3;
 % Average of accuracies for Unnormalized Laplacian
 avgAccU = zeros(10,1);
 % Average of accuracies for Normalized Symmetric Laplacian
@@ -37,7 +35,7 @@ avgAccS = zeros(10,1);
 avgAccR = zeros(10,1);
 
 for i = 1 : 10
-    [avgAccU(i), avgAccS(i), avgAccR(i)] = computeAvgAcc(n, K);
+    [avgAccU(i), avgAccS(i), avgAccR(i)] = computeAvgAcc(n);
     n = n + 250;
 end
 %% Plot the minimum, the maximum, the sample median, and the first and 

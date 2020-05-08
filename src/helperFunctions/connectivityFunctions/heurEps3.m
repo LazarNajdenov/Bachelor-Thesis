@@ -5,6 +5,7 @@ function epsilon = heurEps3(Pts)
 % Output
 % epsilon: the value for the epsilon-neighoborhood
     n = size(Pts,1);
+    d = size(Pts,2);
     epsilon = log(n);
 end
 
