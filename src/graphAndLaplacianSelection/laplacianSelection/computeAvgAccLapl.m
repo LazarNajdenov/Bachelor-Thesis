@@ -1,4 +1,4 @@
-function [avgAccU, avgAccS, avgAccR] = computeAvgAcc(n)
+function [avgAccU, avgAccS, avgAccR] = computeAvgAccLapl(n)
 % COMPUTEAVGACC Computes the average accuracies on the three different Laplacians
 % constructed from an adjacency matrix with the kNN, for a particular
 % dataset
@@ -24,9 +24,9 @@ function [avgAccU, avgAccS, avgAccR] = computeAvgAcc(n)
     
     % Use kNN as connectivity function and Max Gauss assimilarity function 
     % to generate adjacency matrix
-    [G, kNN] = chooseConnFun(Pts, 2);
+    G = kNNConGraph(Pts, 20);
     if ~isConnected(G), error('The graph is not connected'); end
-    S = chooseSimFun(Pts, 2, kNN);
+    S = maxSimilarityfunc(Pts, 20);
     W = sparse(S .* G);
     % Compute unnormalized Laplacian     
     [~, V1, ~] = chooseLapl(W, K, 1);

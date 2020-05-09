@@ -10,6 +10,8 @@ function [cnn] = computeCNN(S,epsilon)
 
     cnn = zeros(size(S));
     n = size(S,1);
+    f = waitbar(0,'1','Name','Compute Cnn similarity - maxima enim, patientia virtus',...
+    'CreateCancelBtn','setappdata(gcbf,''canceling'',1)');
     for i = 1 : n
         % Find the indices of all the elements within radius epsilon of 
         % point i    
@@ -29,6 +31,8 @@ function [cnn] = computeCNN(S,epsilon)
             cnn(i,j) = length(c); 
             cnn(j,i) = cnn(i,j);
         end
+        waitbar(i/n,f,sprintf('%5.2f',100*i/n))
     end
+    delete(f)
 end
 

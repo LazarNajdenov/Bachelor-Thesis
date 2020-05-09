@@ -13,30 +13,30 @@ clear;
 close all;
 
 warning off
-addpath ../
-addpath ../datasets/
-addpath ../helperFunctions/
-addpath ../helperFunctions/wgPlot/
-addpath ../helperFunctions/plotFunctions/
-addpath ../helperFunctions/computeLaplacians/
-addpath ../helperFunctions/evaluationFunctions/
-addpath ../helperFunctions/similarityFunctions/
-addpath ../helperFunctions/connectivityFunctions/
+addpath ../../
+addpath ../../datasets/
+addpath ../../helperFunctions/
+addpath ../../helperFunctions/wgPlot/
+addpath ../../helperFunctions/plotFunctions/
+addpath ../../helperFunctions/computeLaplacians/
+addpath ../../helperFunctions/evaluationFunctions/
+addpath ../../helperFunctions/similarityFunctions/
+addpath ../../helperFunctions/connectivityFunctions/
 
 % For reproducibility, set rng seed
 rng('default');
 % Initial dataset size
-n = 250;
+n = 400;
 % Average of accuracies for Unnormalized Laplacian
-avgAccU = zeros(10,1);
+avgAccU = zeros(9,1);
 % Average of accuracies for Normalized Symmetric Laplacian
-avgAccS = zeros(10,1);
+avgAccS = zeros(9,1);
 % Average of accuracies for Normalized Random-Walk Laplacian
-avgAccR = zeros(10,1);
+avgAccR = zeros(9,1);
 
-for i = 1 : 10
-    [avgAccU(i), avgAccS(i), avgAccR(i)] = computeAvgAcc(n);
-    n = n + 250;
+for i = 1 : 9
+    [avgAccU(i), avgAccS(i), avgAccR(i)] = computeAvgAccLapl(n);
+    n = n + 150;
 end
 %% Plot the minimum, the maximum, the sample median, and the first and 
 %  third quartiles, using boxplot for the different accuracies

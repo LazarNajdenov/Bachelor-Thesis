@@ -1,4 +1,4 @@
-function [L_rw, V, P, lambda] = randwalkLapl(W,K)
+function [L_rw2, V, P, lambda] = randwalkLapl(W,K)
 %RANDWALKLAPL Compute random-walk Laplacian and K smallest eigenvectors
     fprintf('--------------------------------\n');
     fprintf('Random Walk Laplacian\n');
