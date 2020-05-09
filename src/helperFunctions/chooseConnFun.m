@@ -18,7 +18,7 @@ function [G, kNN] = chooseConnFun(Pts, connFun)
     if     connFun == 1, epsilon = heurEps3(Pts);
                          G = USI_epsilonSimGraph(epsilon,Pts);
     % kNN Connectivity Matrix
-    elseif connFun == 2, kNN = 25;
+    elseif connFun == 2, kNN = input('Choose the number of kNN\n');
                          G = kNNConGraph(Pts,kNN);
     % mkNN Connectivity Matrix
     elseif connFun == 3, kNN = input('Choose the number of mkNN\n');

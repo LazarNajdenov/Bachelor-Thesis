@@ -1,4 +1,4 @@
-function [L_sym, V] = symmLapl(W,K)
+function [L_sym, V, lambda] = symmLapl(W,K)
 %SYMMLAPL Compute normalized symmetric Laplacian and K smallest eigenvectors
     fprintf('--------------------------------\n');
     fprintf('Normalized symmetric Laplacian\n');
@@ -17,6 +17,6 @@ function [L_sym, V] = symmLapl(W,K)
     DiagHalf = Diag + diag(d - diag(Diag));
     L_sym    = DiagHalf * L * DiagHalf;
     L_sym    = (L_sym + L_sym')./2;
-    [V,~]    = eigs(L_sym, K, 'SA');
+    [V,lambda]    = eigs(L_sym, K, 'SM');
 end
 

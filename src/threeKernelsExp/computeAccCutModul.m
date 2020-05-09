@@ -1,4 +1,4 @@
-function [accuracy, cuts, meanAcc, meanCuts] = computeAccCutModul(W, V, K, label, laplMat)
+function [accuracy, cuts, meanAcc, meanCuts, x_results] = computeAccCutModul(W, V, K, label, laplMat)
 % COMPUTEACCCUTMODUL compute accuracy, cuts, and modularity of
 % different clustering results which depend on 1-10 k-means replicates
     x_results       = zeros(size(W, 1), 10);

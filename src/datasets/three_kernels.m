@@ -13,10 +13,10 @@ if nargin < 3
     r1 = 20;
 end
 if nargin < 4
-    r2 = 35;
+    r2 = 40;
 end
 if nargin < 5
-    r3 = 55;
+    r3 = 60;
 end
 if nargin < 6
     noise = 7.2;
@@ -25,6 +25,7 @@ if nargin < 7
     ratio = 0.6;
 end
 
+% Change number of points N
 phi1 = rand(N/2,1) * pi;
 inner = [minx + r1 * sin(phi1) - .5 * noise  + noise * rand(N/2,1), r1 * ratio * cos(phi1) - .5 * noise + noise * rand(N/2,1), zeros(N/2,1)];
     

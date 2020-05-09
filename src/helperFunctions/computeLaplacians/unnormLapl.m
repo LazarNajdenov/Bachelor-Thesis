@@ -1,4 +1,4 @@
-function [L, V] = unnormLapl(W, K)
+function [L_2, V, lambda] = unnormLapl(W, K)
 %UNNORMLAPL Compute unnormalized Laplacian and K smallest eigenvectors
 
     fprintf('--------------------------------\n');
@@ -12,7 +12,8 @@ function [L, V] = unnormLapl(W, K)
     
     % Construct the unnormalized Laplacian
     L = Diag - W;
-    [V,~] = eigs(L, K, 'SA'); 
+    L_2 = L/ norm(full(L));
+    [V,lambda] = eigs(L_2, K, 'SM'); 
     
 end
 
