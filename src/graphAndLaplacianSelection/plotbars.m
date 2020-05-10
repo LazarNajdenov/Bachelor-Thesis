@@ -22,6 +22,6 @@ function plotbars(mAcc1, mRatio1, mAcc2, mRatio2, mAcc3, mRatio3)
     text(xtips2,ytips2,labels2,'HorizontalAlignment','center',...
         'VerticalAlignment','bottom','FontSize', 12)
     set(gca,'fontsize',15)
-    set(img,'Renderer', 'painters', 'Position', [400 150 1200 600])
+    set(img,'Renderer', 'painters', 'Position', [400 150 950 600])
 end
 

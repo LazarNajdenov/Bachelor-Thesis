@@ -13,6 +13,7 @@ clear;
 close all;
 
 warning off
+addpath ../
 addpath ../../
 addpath ../../datasets/
 addpath ../../helperFunctions/
