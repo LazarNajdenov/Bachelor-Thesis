@@ -7,7 +7,8 @@ function [Pts_spirals,Pts_clusterin,Pts_corn,Pts_halfk,Pts_fullmoon,Pts_out] = g
 % dimosthenis.pasadakis@usi.ch
 % ICS, USI.
 
-clear all;
+clc;
+clear;
 close all;
 
 % figure;
@@ -16,7 +17,8 @@ close all;
 %  colormap([1 0 .5;   % magenta
 %            0 0 .8;   % blue
 %            0 .6 0;   % dark green
-%            .3 1 0]); % bright green
+%            .3 1 0;   % bright green
+%            ]); 
 
 % subplot(231);
 Pts_spirals = twospirals();

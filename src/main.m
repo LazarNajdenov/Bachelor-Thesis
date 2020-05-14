@@ -1,3 +1,4 @@
+
 function [] = main(caseName, blackBox, connFun, simFun, laplMat)
 % MAIN main function which clusters a real dataset using different types of
 % spectral clustering techniques and evaluates the results.

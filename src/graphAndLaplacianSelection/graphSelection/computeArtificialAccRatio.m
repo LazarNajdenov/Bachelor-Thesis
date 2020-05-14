@@ -26,7 +26,7 @@ function [avgAcc1, avgAcc2, avgAcc3, avgRatio1, avgRatio2, avgRatio3] = computeA
     G1 = USI_epsilonSimGraph(epsilon, Pts);
     if ~isConnected(G1), error('The graph is not connected'); end
     S1 = gaussSimilarityfunc(Pts);
-    W1 = sparse(S1 .* G1); 
+    W1 = sparse(S1 .* G1);
     % Use kNN as connectivity function and Max Gauss assimilarity function 
     % to generate adjacency matrix
     if m < 400
