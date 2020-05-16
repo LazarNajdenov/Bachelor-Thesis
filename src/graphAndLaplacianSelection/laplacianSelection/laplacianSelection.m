@@ -56,8 +56,8 @@ rng('default');
 load openmlWandLabels.mat
 
 % Ecoli dataset kNN = 10
-[EcolAccU, EcolAccS, EcolAccR, EcolAccB, EcolCutU, ...
-    EcolCutS, EcolCutR, EcolCutB] = computeAccCutLapl(WEcol, lEcol);
+% [EcolAccU, EcolAccS, EcolAccR, EcolAccB, EcolCutU, ...
+%     EcolCutS, EcolCutR, EcolCutB] = computeAccCutLapl(WEcol, lEcol);
 
 % Too big dataset:
 % Fashion MNIST dataset kNN = 10
@@ -66,8 +66,8 @@ load openmlWandLabels.mat
 
 
 % Iris dataset kNN = 30
-[IrisAccU, IrisAccS, IrisAccR, IrisAccB, IrisCutU, ...
-    IrisCutS, IrisCutR, IrisCutB] = computeAccCutLapl(WIris, lIris);
+% [IrisAccU, IrisAccS, IrisAccR, IrisAccB, IrisCutU, ...
+%     IrisCutS, IrisCutR, IrisCutB] = computeAccCutLapl(WIris, lIris);
 
 % Too big dataset:
 % Kmnist dataset kNN = 10
@@ -76,11 +76,11 @@ load openmlWandLabels.mat
 
 
 % Mice dataset kNN = 10
-[MiceAccU, MiceAccS, MiceAccR, MiceAccB, MiceCutU, ...
-    MiceCutS, MiceCutR, MiceCutB] = computeAccCutLapl(WMice, lMice);
-% Olivetti dataset kNN = 10
-[OlivAccU, OlivAccS, OlivAccR, OlivAccB, OlivCutU, ...
-    OlivCutS, OlivCutR, OlivCutB] = computeAccCutLapl(WOliv, lOliv);
+% [MiceAccU, MiceAccS, MiceAccR, MiceAccB, MiceCutU, ...
+%     MiceCutS, MiceCutR, MiceCutB] = computeAccCutLapl(WMice, lMice);
+% % Olivetti dataset kNN = 10
+% [OlivAccU, OlivAccS, OlivAccR, OlivAccB, OlivCutU, ...
+%     OlivCutS, OlivCutR, OlivCutB] = computeAccCutLapl(WOliv, lOliv);
 
 % Too big dataset:
 % Pendigits dataset kNN = 20
@@ -90,18 +90,18 @@ load openmlWandLabels.mat
 % Gives V with Complex numbers the RandomWalk 
 % Plants dataset kNN = 10
 % [PlantAccU, PlantAccS, PlantAccR, PlantAccB, PlantCutU, ...
-%     PlantCutS, PlantCutR, PlantCutB] = computeAccCutLapl(WPlant, lPlant);
-% Spectro dataset kNN = 10
-% [SpectAccU, SpectAccS, SpectAccR, SpectAccB, SpectCutU, ...
-%     SpectCutS, SpectCutR, SpectCutB] = computeAccCutLapl(WSpect, lSpect);
-
-
-% Umist dataset kNN = 10
-[UmisAccU, UmisAccS, UmisAccR, UmisAccB, UmisCutU, ...
-    UmisCutS, UmisCutR, UmisCutB] = computeAccCutLapl(WUmis, lUmis);
-% Vehicle dataset kNN = 10
-[VehiAccU, VehiAccS, VehiAccR, VehiAccB, VehiCutU, ...
-    VehiCutS, VehiCutR, VehiCutB] = computeAccCutLapl(WVehi, lVehi);
+%     PlantCutS, PlantCutR, PlantCutB, V3] = computeAccCutLapl(WPlant, lPlant);
+% % Spectro dataset kNN = 10
+[SpectAccU, SpectAccS, SpectAccR, SpectAccB, SpectCutU, ...
+    SpectCutS, SpectCutR, SpectCutB, SpectQU, SpectQS, SpectQR, SpectQB] = computeAccCutLapl(WSpect, lSpect);
+% 
+% 
+% % Umist dataset kNN = 10
+% [UmisAccU, UmisAccS, UmisAccR, UmisAccB, UmisCutU, ...
+%     UmisCutS, UmisCutR, UmisCutB] = computeAccCutLapl(WUmis, lUmis);
+% % Vehicle dataset kNN = 10
+% [VehiAccU, VehiAccS, VehiAccR, VehiAccB, VehiCutU, ...
+%     VehiCutS, VehiCutR, VehiCutB] = computeAccCutLapl(WVehi, lVehi);
 
 %% Plot the minimum, the maximum, the sample median, and the first and 
 %  third quartiles, using boxplot for the different accuracies

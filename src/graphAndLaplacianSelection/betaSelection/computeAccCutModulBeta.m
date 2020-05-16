@@ -9,11 +9,8 @@ function [accuracy, cuts, modularity] = computeAccCutModulBeta(W, K, label, lapl
     modularity      = zeros(9,1);
     beta = 1.1;
     i = 1;
-    while i <=9
-        if i == 9
-            fprintf("bella\n");
-        end
-        [~, V, ~] = randomWalkBeta(W, K, beta);
+    while i <= 9
+        [V, ~] = randomWalkBeta(W, K, beta);
         x_results(:,i) = kmeans(V, K,'Display', 'final','Replicates', 10);
         x_inferred(:, i) = label_data(x_results(:,i), label);
         [~, accuracy(i), cuts(i), modularity(i)] = evaluate_clusters(label, x_inferred(:,i), ...

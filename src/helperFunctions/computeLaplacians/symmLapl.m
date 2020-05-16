@@ -1,4 +1,4 @@
-function [L_sym, V, lambda] = symmLapl(W,K)
+function [V, lambda] = symmLapl(W,K)
 %SYMMLAPL Compute normalized symmetric Laplacian and K smallest eigenvectors
     fprintf('--------------------------------\n');
     fprintf('Normalized symmetric Laplacian\n');
