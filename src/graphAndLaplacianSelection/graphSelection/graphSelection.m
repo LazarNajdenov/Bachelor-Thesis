@@ -27,7 +27,7 @@ addpath ../../helperFunctions/evaluationFunctions/
 addpath ../../helperFunctions/similarityFunctions/
 addpath ../../helperFunctions/connectivityFunctions/
 
-For reproducibility, set rng seed
+% For reproducibility, set rng seed
 rng('default');
 % Initial dataset size
 n = 400;
@@ -97,6 +97,7 @@ lgd.Title.String = 'Configurations';
 addpath ../
 addpath ../../
 addpath ../../datasets/
+addpath ../../kNNMaxResults/
 addpath ../../helperFunctions/
 addpath ../../helperFunctions/wgPlot/
 addpath ../../helperFunctions/plotFunctions/
@@ -104,6 +105,7 @@ addpath ../../helperFunctions/computeLaplacians/
 addpath ../../helperFunctions/evaluationFunctions/
 addpath ../../helperFunctions/similarityFunctions/
 addpath ../../helperFunctions/connectivityFunctions/
+
 rng('default');
 
 % kNN = 20
@@ -142,6 +144,3 @@ load R15.mat
 %% Plot resulting graph
 plotbars(mAcc1, mRatio1, mAcc2, mRatio2, mAcc3, mRatio3);
 title('Averages of accuracies and ratiocuts for 3-kernels with increasing size')
-% plotbars(epsGaussAcc, epsGaussRatio, kNNMaxAcc, kNNMaxRatio, epsCnnAcc, epsCnnRatio);
-% title('Averages of accuracies and ratiocuts for all datasets')
-

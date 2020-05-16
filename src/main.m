@@ -1,5 +1,4 @@
-
-function [] = main(caseName, blackBox, connFun, simFun, laplMat)
+function main(caseName, blackBox, connFun, simFun, laplMat)
 % MAIN main function which clusters a real dataset using different types of
 % spectral clustering techniques and evaluates the results.
 % 
@@ -10,12 +9,12 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
 %               - 0: No blackBox SC
 %               - 1: Use blackBox SC
 % connFun:  input value deciding the type connectivity matrix to generate;
-%           by default the epsilon-connectivity is used:
+%           by default the kNN is used:
 %               - 1: use epsilon-connectivity
 %               - 2: use kNN
 %               - 3: use mkNN
 % simFun:   input value deciding the type similarity matrix to generate;
-%           by default the CNN similarity measure is used:
+%           by default the Max similarity measure is used:
 %               - 1: use Gaussian similarity 
 %               - 2: use max similarity
 %               - 3: use local scale similarity
@@ -27,6 +26,7 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
     
     clc;
     close all;
+    addpath datasets/
     addpath helperFunctions/
     addpath helperFunctions/wgPlot/
     addpath helperFunctions/plotFunctions/
@@ -34,7 +34,6 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
     addpath helperFunctions/evaluationFunctions/
     addpath helperFunctions/similarityFunctions/
     addpath helperFunctions/connectivityFunctions/
-    addpath datasets/
     
     if nargin < 5, laplMat  = 3; end
     if nargin < 4, simFun   = 4; end
@@ -55,19 +54,18 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         evaluate_clusters(label, x_inferred, x_spec, Pts, 1, blackBox);
         
     else
-        if connFun == 1 && simFun == 4 && laplMat == 3
-            epsilon           = heurEps2(Pts);
-            G                 = USI_epsilonSimGraph(epsilon,Pts);
+        if connFun == 2 && simFun == 2 && laplMat == 3
+            [G, kNN]          = chooseConnFun(Pts, connFun);
             if ~isConnected(G), error('The graph is not connected'); end
-            S                 = commonNearNeighborSimilarityFunc(Pts, epsilon);
+            S                 = chooseSimFun(Pts, simFun, kNN);
             W                 = sparse(S .* G);
             nonzero           = nnz(W);
             nrows             = size(W,1);
             fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
                     nrows, nonzero, nonzero/nrows);
-            [~, V, P]         = chooseLapl(W, K, laplMat);
+            [L, V, ~]         = chooseLapl(W, K, laplMat);
             x_spec            = kmeans(V, K,'Display', 'final','Replicates', 10);
-            plotter(W, Pts, P, V, x_spec);
+            plotter(W, Pts, L, V, x_spec);
             
         else
             [G, kNN]          = chooseConnFun(Pts, connFun);
@@ -91,11 +89,15 @@ function [] = main(caseName, blackBox, connFun, simFun, laplMat)
         % accuracy and RatioCut, NormalizedCut     
         evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox, laplMat);
         
-        matName          = strcat(caseName);
-        matName          = strcat(matName,'_results.mat');
-
+        if connFun == 2
+            matName = sprintf("%s_%dNN.mat", caseName, kNN);
+        else
+            matName = strcat(caseName);
+            matName = strcat(matName,'_results.mat');
+        end
+    
         if(~strcmp(matName, "NULL"))
-            save(matName,'W','label','x_spec')
+            save(matName,'W','label')
         end
     end
     
