@@ -38,15 +38,15 @@ function [avgAcc1, avgAcc2, avgAcc3, avgRatio1, avgRatio2, avgRatio3] = computeA
     W3 = sparse(S3 .* G1);
     
     % Compute unnormalized Laplacian     
-    [~, V1, ~, ~] = chooseLapl(W1, K, 1);
+    [V1, ~] = chooseLapl(W1, K, 1);
     % Compute symmetric normalized Laplacian
-    [~, V2, ~, ~] = chooseLapl(W2, K, 1);
+    [V2, ~] = chooseLapl(W2, K, 1);
     % Compute normalized Random-walk Laplacian
-    [~, V3, ~, ~] = chooseLapl(W3, K, 1);
+    [V3, ~] = chooseLapl(W3, K, 1);
     % Compute average accuracies for 10 runs of k-means     
-    [~, ~, avgAcc1, avgRatio1, ~] = computeAccCutModul(W1, V1, K, label, 1);
-    [~, ~, avgAcc2, avgRatio2, ~] = computeAccCutModul(W2, V2, K, label, 1);
-    [~, ~, avgAcc3, avgRatio3, ~] = computeAccCutModul(W3, V3, K, label, 1);
+    [~, ~, avgAcc1, avgRatio1, ~] = computeAccCutModul(W1, V1, K, label);
+    [~, ~, avgAcc2, avgRatio2, ~] = computeAccCutModul(W2, V2, K, label);
+    [~, ~, avgAcc3, avgRatio3, ~] = computeAccCutModul(W3, V3, K, label);
     
 end
 

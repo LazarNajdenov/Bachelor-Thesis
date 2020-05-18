@@ -1,4 +1,4 @@
-function [AccU, AccS, AccR, AccB, RatioU, RatioS, RatioR, RatioB, QU, QS, QR, QB] = computeAccCutLapl(W, label)
+function [Acc, Ratio, NCut, Q, beta] = computeAccCutLapl(W, label, betas)
 % COMPUTEAVGACC Computes the average accuracies on the three different 
 % Laplacians constructed from an adjacency matrix with the kNN connectivity
 % function and the Max similarity function, for a particular dataset
@@ -14,7 +14,7 @@ function [AccU, AccS, AccR, AccB, RatioU, RatioS, RatioR, RatioB, QU, QS, QR, QB
     % Compute normalized Random-walk Laplacian (beta = 1)
     [V3, ~] = chooseLapl(W, K, 3);
     % Compute normalized Random-walk Laplacian (beta = 1.4)
-    [V4, ~] = randomWalkBeta(W, K, 1.4);
+    
     
     % Compute accuracies and cuts for by computing 10 replicates of kmeans
     % for each Laplacian to help find a lower, local minimum:
@@ -22,23 +22,35 @@ function [AccU, AccS, AccR, AccB, RatioU, RatioS, RatioR, RatioB, QU, QS, QR, QB
     % Unnormalized Laplacian
     x_results1 = kmeans(V1, K, 'Replicates', 10);
     x_inferred1 = label_data(x_results1, label);
-    [~, AccU, RatioU, QU] = evaluate_clusters(label, x_inferred1, x_results1, W, 0, 0, 1);
+    [~, AccU, RatioU, NCutU, QU] = evaluate_clusters(label, x_inferred1, x_results1, W, 0, 0);
 
     % Symmetric Laplacian
     x_results2 = kmeans(V2, K,'Replicates', 10);
     x_inferred2 = label_data(x_results2, label);
-    [~, AccS, RatioS, QS] = evaluate_clusters(label, x_inferred2, x_results2, W, 0, 0, 2);
+    [~, AccS, RatioS, NCutS, QS] = evaluate_clusters(label, x_inferred2, x_results2, W, 0, 0);
     
     % Random Walk Laplacian beta = 1
     x_results3 = kmeans(V3, K, 'Replicates', 10);
     x_inferred3 = label_data(x_results3, label);
-    [~, AccR, RatioR, QR] = evaluate_clusters(label, x_inferred3, x_results3, W, 0, 0, 2);
+    [~, AccR, RatioR, NCutR, QR] = evaluate_clusters(label, x_inferred3, x_results3, W, 0, 0);
 
+    % Random Walk Laplacian with variable beta
+    [accs, cuts, ncuts, mods] = computeAccCutModulBeta(W, K, label);
+    % Take index of modularity with higher value
+    [~, i] = max(mods);
     
-    % Random Walk Laplacian beta = 1.4
-    x_results4 = kmeans(V4, K, 'Replicates', 10);
-    x_inferred4 = label_data(x_results4, label);
-    [~, AccB, RatioB, QB] = evaluate_clusters(label, x_inferred4, x_results4, W, 0, 0, 2);
+    % Take acc, rcut, ncut, modularity and beta from index i
+    AccB   = accs(i);
+    RatioB = cuts(i);
+    NCutB  = ncuts(i);
+    QB     = mods(i);
+    beta   = betas(i);
+    
+    % Save all the results in arrays    
+    Acc    = [AccU, AccS, AccR, AccB];
+    Ratio  = [RatioU, RatioS, RatioR, RatioB];
+    NCut   = [NCutU, NCutS, NCutR, NCutB];
+    Q      = [QU, QS, QR, QB];
     
 end
 

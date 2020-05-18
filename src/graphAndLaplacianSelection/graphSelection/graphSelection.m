@@ -57,10 +57,13 @@ mRatio3 = mean(avgRatio3);
 %% Plot accuracies
 x = 600:225:2400;
 img1 = figure;
-p1 = plot(x, avgAcc1,'LineWidth',2,'Color', 'black' ,'Marker','o','MarkerFaceColor','cyan','MarkerSize',8);
+p1 = plot(x, avgAcc1,'LineWidth',2,'Color', [0 0.5 0.5] ,'Marker','o',...
+    'MarkerFaceColor','cyan','MarkerSize',8);
 hold on;
-p2 = plot(x, avgAcc2,'LineWidth',2,'Color', [0.9100    0.4100    0.1700] ,'Marker','o','MarkerFaceColor','blue','MarkerSize',8);
-p3 = plot(x, avgAcc3,'LineWidth',2,'Color', 'green' ,'Marker','o','MarkerFaceColor','yellow','MarkerSize',8);
+p2 = plot(x, avgAcc2,'LineWidth',2,'Color', [0.8 0.44 0] ,'Marker','o',...
+    'MarkerFaceColor', [1 0.55 0],'MarkerSize',8);
+p3 = plot(x, avgAcc3,'LineWidth',2,'Color', [0 .6 0] ,'Marker','o',...
+    'MarkerFaceColor', 'green' ,'MarkerSize',8);
 hold off;
 xlabel('Size');
 ylabel('Accuracy');
@@ -69,16 +72,19 @@ xticks(600:225:2400);
 set(gca,'fontsize',15);
 set(img1,'Renderer', 'painters', 'Position', [400 150 950 600]);
 h = [p1;p2;p3];
-lgd = legend(h, 'Eps-Gauss', 'kNN-Max', 'Eps-Cnn','Location','BestOutside');
+lgd = legend(h, 'Eps-Gauss', 'kNN-Max', 'Eps-Cnn','Location','northwest');
 lgd.FontSize = 15;
 lgd.Title.String = 'Configurations';
 % Plot ratios
 rmax = max([max(avgRatio1), max(avgRatio2), max(avgRatio3)]);
 img4 = figure;
-p4 = plot(x, avgRatio1,'LineWidth',2,'Color', 'black' ,'Marker','o','MarkerFaceColor','cyan','MarkerSize',8);
+p4 = plot(x, avgRatio1,'LineWidth',2,'Color', [0 0.5 0.5] ,'Marker','o',...
+    'MarkerFaceColor','cyan','MarkerSize',8);
 hold on;
-p5 = plot(x, avgRatio2,'LineWidth',2,'Color', [0.9100    0.4100    0.1700],'Marker','o','MarkerFaceColor','blue','MarkerSize',8);
-p6 = plot(x, avgRatio3,'LineWidth',2,'Color', 'green' ,'Marker','o','MarkerFaceColor','yellow','MarkerSize',8);
+p5 = plot(x, avgRatio2,'LineWidth',2,'Color', [0.8 0.44 0],'Marker','o',...
+    'MarkerFaceColor',[1 0.55 0],'MarkerSize',8);
+p6 = plot(x, avgRatio3,'LineWidth',2,'Color', [0 .6 0] ,'Marker','o',...
+    'MarkerFaceColor', 'green','MarkerSize',8);
 hold off;
 axis([600 2400 -0.5 rmax + 0.1]);
 xticks(600:225:2400);
@@ -88,10 +94,9 @@ ylabel('Ratiocut');
 set(gca,'fontsize',15)
 set(img4,'Renderer', 'painters', 'Position', [400 150 950 600])
 h2 = [p4;p5;p6];
-lgd = legend(h2, 'Eps-Gauss', 'kNN-Max', 'Eps-Cnn','Location','BestOutside');
+lgd = legend(h2, 'Eps-Gauss', 'kNN-Max', 'Eps-Cnn','Location','best');
 lgd.FontSize = 15;
 lgd.Title.String = 'Configurations';
-
 %% Compute accuracies and ratios of artificial shape sets
 % For reproducibility, set rng seed
 addpath ../

@@ -87,7 +87,7 @@ function main(caseName, blackBox, connFun, simFun, laplMat)
         
         % Evaluate clustering results, by computing confusion matrix, 
         % accuracy and RatioCut, NormalizedCut     
-        evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox, laplMat);
+        evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox);
         
         if connFun == 2
             matName = sprintf("%s_%dNN.mat", caseName, kNN);

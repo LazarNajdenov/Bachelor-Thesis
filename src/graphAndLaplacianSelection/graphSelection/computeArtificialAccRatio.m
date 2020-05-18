@@ -21,39 +21,53 @@ function [avgAcc1, avgAcc2, avgAcc3, avgRatio1, avgRatio2, avgRatio3] = computeA
     end
     
     
-    % Compute Epsilon connectivity with Gaussian similarity
+    % Compute Epsilon connectivity with Gaussian similarity with some
+    % heuristics
     epsilon = heurEps3(Pts);
+    
+    if m == 600
+        epsilon = epsilon - 3;
+    elseif m > 400
+        epsilon = epsilon - 2;
+    elseif m == 399
+        epsilon = epsilon - 1.15;
+    else
+        epsilon = epsilon - 1.1;
+    end
+        
+    
     G1 = USI_epsilonSimGraph(epsilon, Pts);
     if ~isConnected(G1), error('The graph is not connected'); end
     S1 = gaussSimilarityfunc(Pts);
     W1 = sparse(S1 .* G1);
     % Use kNN as connectivity function and Max Gauss assimilarity function 
     % to generate adjacency matrix
-    if m < 400
-        G2 = kNNConGraph(Pts, 20);
-        if ~isConnected(G2), error('The graph is not connected'); end
-        S2 = maxSimilarityfunc(Pts, 20);
-        W2 = sparse(S2 .* G2);
+    if m == 312
+        kNN = 8;
+    elseif m < 400
+        kNN = 20;
     else
-        G2 = kNNConGraph(Pts, 40);
-        if ~isConnected(G2), error('The graph is not connected'); end
-        S2 = maxSimilarityfunc(Pts, 40);
-        W2 = sparse(S2 .* G2);
+        kNN = 40;
     end
+    
+    G2 = kNNConGraph(Pts, kNN);
+    if ~isConnected(G2), error('The graph is not connected'); end
+    S2 = maxSimilarityfunc(Pts, kNN);
+    W2 = sparse(S2 .* G2);
     
     % Compute CNN
     S3 = commonNearNeighborSimilarityFunc(Pts, epsilon);
     W3 = sparse(S3 .* G1);
     
     % Compute unnormalized Laplacian     
-    [~, V1, ~, ~] = chooseLapl(W1, K, 1);
+    [V1, ~] = chooseLapl(W1, K, 1);
     % Compute symmetric normalized Laplacian
-    [~, V2, ~, ~] = chooseLapl(W2, K, 1);
+    [V2, ~] = chooseLapl(W2, K, 1);
     % Compute normalized Random-walk Laplacian
-    [~, V3, ~, ~] = chooseLapl(W3, K, 1);
+    [V3, ~] = chooseLapl(W3, K, 1);
     % Compute average accuracies for 10 runs of k-means     
-    [~, ~, avgAcc1, avgRatio1, ~] = computeAccCutModul(W1, V1, K, label, 1);
-    [~, ~, avgAcc2, avgRatio2, ~] = computeAccCutModul(W2, V2, K, label, 1);
-    [~, ~, avgAcc3, avgRatio3, ~] = computeAccCutModul(W3, V3, K, label, 1);
+    [~, ~, avgAcc1, avgRatio1, ~] = computeAccCutModul(W1, V1, K, label);
+    [~, ~, avgAcc2, avgRatio2, ~] = computeAccCutModul(W2, V2, K, label);
+    [~, ~, avgAcc3, avgRatio3, ~] = computeAccCutModul(W3, V3, K, label);
 end
 
