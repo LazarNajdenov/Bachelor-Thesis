@@ -50,55 +50,67 @@ load artificialWandLabels.mat
 %% OpenML Datasets Evaluation 
 
 rng('default');
+
 load openmlWandLabels.mat
 
-% Ecoli dataset kNN = 10
-[EcolAccU, EcolAccS, EcolAccR, EcolAccB, EcolCutU, ...
-    EcolCutS, EcolCutR, EcolCutB] = computeAccCutLapl(WEcol, lEcol);
+% Normal Size Datasets
 
-% Too big dataset:
-% Fashion MNIST dataset kNN = 10
-[FashAccU, FashAccS, FashAccR, FashAccB, FashCutU, ...
-    FashCutS, FashCutR, FashCutB] = computeAccCutLapl(WFash, lFash);
+% Iris dataset kNN = 30, size = 150
+[IrisAcc, IrisRatio, IrisNCut, IrisQ, betaIris]      = computeAccCutLapl(WIris, lIris, betas);
 
+% Glass dataset kNN = 10, size = 214
+[GlassAcc, GlassRatio, GlassNCut, GlassQ, betaGlass] = computeAccCutLapl(WGlas, lGlas, betas);
 
-% Iris dataset kNN = 30
-[IrisAccU, IrisAccS, IrisAccR, IrisAccB, IrisCutU, ...
-    IrisCutS, IrisCutR, IrisCutB] = computeAccCutLapl(WIris, lIris);
+% Ecoli dataset kNN = 10, size = 336
+[EcolAcc, EcolRatio, EcolNCut, EcolQ, betaEcol]      = computeAccCutLapl(WEcol, lEcol, betas);
 
-% Too big dataset:
-% Kmnist dataset kNN = 10
-[KmniAccU, KmniAccS, KmniAccR, KmniAccB, KmniCutU, ...
-    KmniCutS, KmniCutR, KmniCutB] = computeAccCutLapl(WKmni, lKmni);
+% Olivetti dataset kNN = 10, size = 400
+[OlivAcc, OlivRatio, OlivNCut, OlivQ, betaOliv]      = computeAccCutLapl(WOliv, lOliv, betas);
 
+% Spectro dataset kNN = 10, size = 531
+[SpectAcc, SpectRatio, SpectNCut, SpectQ, betaSpect] = computeAccCutLapl(WSpect, lSpect, betas);
 
-% Mice dataset kNN = 10
-[MiceAccU, MiceAccS, MiceAccR, MiceAccB, MiceCutU, ...
-    MiceCutS, MiceCutR, MiceCutB] = computeAccCutLapl(WMice, lMice);
-% Olivetti dataset kNN = 10
-[OlivAccU, OlivAccS, OlivAccR, OlivAccB, OlivCutU, ...
-    OlivCutS, OlivCutR, OlivCutB] = computeAccCutLapl(WOliv, lOliv);
+% Umist dataset kNN = 10, size = 575
+[UmisAcc, UmisRatio, UmisNCut, UmisQ, betaUmis]      = computeAccCutLapl(WUmis, lUmis, betas);
 
-% Too big dataset:
-% Pendigits dataset kNN = 20
-[PendAccU, PendAccS, PendAccR, PendAccB, PendCutU, ...
-    PendCutS, PendCutR, PendCutB] = computeAccCutLapl(WPend, lPend);
+% Vehicle dataset kNN = 10, size = 846
+[VehiAcc, VehiRatio, VehiNCut, VehiQ, betaVehi]      = computeAccCutLapl(WVehi, lVehi, betas);
 
-% Gives V with Complex numbers the RandomWalk 
-% Plants dataset kNN = 10
-[PlantAccU, PlantAccS, PlantAccR, PlantAccB, PlantCutU, ...
-    PlantCutS, PlantCutR, PlantCutB, V3] = computeAccCutLapl(WPlant, lPlant);
-% Spectro dataset kNN = 10
-[SpectAccU, SpectAccS, SpectAccR, SpectAccB, SpectCutU, ...
-    SpectCutS, SpectCutR, SpectCutB, SpectQU, SpectQS, SpectQR, SpectQB] = computeAccCutLapl(WSpect, lSpect);
+% Mice dataset kNN = 10, size = 1077
+[MiceAcc, MiceRatio, MiceNCut, MiceQ, betaMice]      = computeAccCutLapl(WMice, lMice, betas);
 
+% Binaryalphadigs dataset kNN = 10, size = 1404
+[BinaAcc, BinaRatio, BinaNCut, BinaQ, betaBina]      = computeAccCutLapl(WBina, lBina, betas);
 
-% Umist dataset kNN = 10
-[UmisAccU, UmisAccS, UmisAccR, UmisAccB, UmisCutU, ...
-    UmisCutS, UmisCutR, UmisCutB] = computeAccCutLapl(WUmis, lUmis);
-% Vehicle dataset kNN = 10
-[VehiAccU, VehiAccS, VehiAccR, VehiAccB, VehiCutU, ...
-    VehiCutS, VehiCutR, VehiCutB] = computeAccCutLapl(WVehi, lVehi);
+% Yeast dataset kNN = 30, size = 1484
+[YeasAcc, YeasRatio, YeasNCut, YeasQ, betaYeas]      = computeAccCutLapl(WYeas, lYeas, betas);
+
+% Plants dataset kNN = 10, size = 1600
+[PlantAcc, PlantRatio, PlantNCut, PlantQ, betaPlant] = computeAccCutLapl(WPlant, lPlant, betas);
+
+% High Moon dataset kNN = ?, size = 2000
+
+%% Big datasets
+
+rng('default');
+
+load openmlWandLabels.mat
+
+% Fashion MNIST dataset kNN = 10, size = 10000
+[FashAcc, FashRatio, FashNCut, FashQ, betaFash] = computeAccCutLapl(WFash, lFash, betas);
+
+% Kmnist dataset kNN = 10, size = 10000
+[KmniAcc, KmniRatio, KmniNCut, KmniQ, betaKmni] = computeAccCutLapl(WKmni, lKmni, betas);
+
+% Mnist dataset kNN = 10, size = 10000
+[MnisAcc, MnisRatio, MnisNCut, MnisQ, betaMnis] = computeAccCutLapl(WMnis, lMnis, betas);
+
+% Pendigits dataset kNN = 20, size = 10992
+[PendAcc, PendRatio, PendNCut, PendQ, betaPend] = computeAccCutLapl(WPend, lPend, betas);
+
+% USPS BNH dataset kNN = 10, size = 11000
+[UspsAcc, UspsRatio, UspsNCut, UspsQ, betaUsps] = computeAccCutLapl(WUsps, lUsps, betas);
+
 
 %% Plot the minimum, the maximum, the sample median, and the first and 
 %  third quartiles, using boxplot for the different accuracies
