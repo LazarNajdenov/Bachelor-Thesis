@@ -145,7 +145,3 @@ load R15.mat
 
 [R15Acc1, R15Acc2, R15Acc3, R15Ratio1, ...
    R15Ratio2, R15Ratio3] = computeArtificialAccRatio(R15);
-
-%% Plot resulting graph
-plotbars(mAcc1, mRatio1, mAcc2, mRatio2, mAcc3, mRatio3);
-title('Averages of accuracies and ratiocuts for 3-kernels with increasing size')

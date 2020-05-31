@@ -10,11 +10,9 @@ function [V, lambda] = chooseLapl(W, K, laplMat)
 % W      : Adjacency matrix
 % K      : Number of clusters
 % Output
-% L      : Laplacian matrix
 % V      : K smallest eigenvectors
-% P      : Transition probability matrix(Diffusion matrix)
+% lambda : K smallest eigenvalues
 
-%     if nargout > 2,      P = zeros(size(W)); end
     % Unnormalized Laplacian
     if laplMat == 1,     [V, lambda] = unnormLapl(W, K);
     % Symmetric Normalized Laplacian

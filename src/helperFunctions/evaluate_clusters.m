@@ -26,7 +26,7 @@ function [Confusion, ACC, RCut, NCut, Q] = evaluate_clusters(labels,inferred_lab
         fprintf(fmt, Confusion.');
         fprintf('---------------------\n');
         if ~blackBox
-            fprintf('ACC = %f, RCut = %f, NCut = %f, Modularity = %f\n', ACC, RCut, NCut, Q);
+            fprintf('ACC = %f, RCut = %f, NCut = %f, MOD = %f\n', ACC, RCut, NCut, Q);
         else 
             fprintf('ACC = %f\n', ACC);
         end

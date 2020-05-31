@@ -1,11 +1,11 @@
-function [G] = USI_epsilonSimGraph(epsilon,Pts)
-% Construct an epsilon similarity graph
+function [G] = USI_epsilonConGraph(epsilon,Pts)
+% Construct an epsilon connectivity graph
 % Input
 % epsilon: size of neighborhood (calculate from Prim's Algorithm) 
 % Pts    : coordinate list of the sample 
 % 
 % Output
-% A      : the epsilon similarity matrix
+% A      : the epsilon connectivity matrix
 % 
 % USI, ICS, Lugano
 % Numerical Computing

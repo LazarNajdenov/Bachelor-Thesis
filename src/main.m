@@ -1,5 +1,5 @@
-function main(caseName, blackBox, connFun, simFun, laplMat)
-% MAIN main function which clusters a real dataset using different types of
+function main(caseName, blackBox, simGraph, laplMat)
+% MAIN main function which clusters a real-world dataset using different types of
 % spectral clustering techniques and evaluates the results.
 % 
 % Input
@@ -8,24 +8,27 @@ function main(caseName, blackBox, connFun, simFun, laplMat)
 %           by default it is not used:
 %               - 0: No blackBox SC
 %               - 1: Use blackBox SC
-% connFun:  input value deciding the type connectivity matrix to generate;
-%           by default the kNN is used:
-%               - 1: use epsilon-connectivity
-%               - 2: use kNN
-%               - 3: use mkNN
-% simFun:   input value deciding the type similarity matrix to generate;
-%           by default the Max similarity measure is used:
-%               - 1: use Gaussian similarity 
-%               - 2: use max similarity
-%               - 3: use local scale similarity
-% laplMat:  input value deciding the type of Laplacian matrix to generate;
-%           by default the normalized random-walk Laplacian is used:
+% simGraph: input value deciding the type connectivity and similarity 
+%           function configuration used for generating the adjacency matrix,
+%           by default the kNN-Max configuration is used:
+%               - 1: use kNN-Max
+%               - 2: use kNN-Gauss
+%               - 3: use kNN-Local
+%               - 4: use eps-Gauss
+%               - 5: use eps-CNN
+%               - 6: use mkNN-Max
+%               - 7: use mkNN-Gauss
+%               - 8: use mkNN-Local
+% laplMat:  input value deciding the type of Laplacian matrix to generate 
+%           from the adjacency matrix, by default the normalized random-walk 
+%           Laplacian is used:
 %               - 1: use unnormalized Laplacian
 %               - 2: use normalized symmetric Laplacian
 %               - 3: use normalized random-walk Laplacian
     
     clc;
     close all;
+    warning off;
     addpath datasets/
     addpath helperFunctions/
     addpath helperFunctions/wgPlot/
@@ -35,18 +38,18 @@ function main(caseName, blackBox, connFun, simFun, laplMat)
     addpath helperFunctions/similarityFunctions/
     addpath helperFunctions/connectivityFunctions/
     
-    if nargin < 5, laplMat  = 3; end
-    if nargin < 4, simFun   = 4; end
-    if nargin < 3, connFun  = 1; end
+    if nargin < 4, laplMat  = 3; end
+    if nargin < 3, simGraph = 1; end
     if nargin < 2, blackBox = 0; end
     if nargin < 1, error('No file specified'); end
-    if (blackBox < 0 || blackBox > 1) || (connFun < 1 || connFun > 3) ... 
-            || (simFun < 1 || simFun > 4) || (laplMat < 1 || laplMat > 3) 
+    if (blackBox < 0 || blackBox > 1) || (simGraph < 1 || simGraph > 8) ...
+            || (laplMat < 1 || laplMat > 3) 
         error('The input given is not applicable');
     end
     
     [Pts, label, K] = Generate_OPENML_datasets(caseName);
     
+    % Use the spectral clustering already implemented in matlab     
     if blackBox
         
         x_spec          = spectralcluster(Pts, K);
@@ -54,48 +57,26 @@ function main(caseName, blackBox, connFun, simFun, laplMat)
         evaluate_clusters(label, x_inferred, x_spec, Pts, 1, blackBox);
         
     else
-        if connFun == 2 && simFun == 2 && laplMat == 3
-            [G, kNN]          = chooseConnFun(Pts, connFun);
-            if ~isConnected(G), error('The graph is not connected'); end
-            S                 = chooseSimFun(Pts, simFun, kNN);
-            W                 = sparse(S .* G);
-            nonzero           = nnz(W);
-            nrows             = size(W,1);
-            fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
-                    nrows, nonzero, nonzero/nrows);
-            [L, V, ~]         = chooseLapl(W, K, laplMat);
-            x_spec            = kmeans(V, K,'Display', 'final','Replicates', 10);
-            plotter(W, Pts, L, V, x_spec);
-            
-        else
-            [G, kNN]          = chooseConnFun(Pts, connFun);
-            if ~isConnected(G), error('The graph is not connected'); end
-            S                 = chooseSimFun(Pts, simFun, kNN);
-            W                 = sparse(S .* G);
-            nonzero           = nnz(W);
-            nrows             = size(W,1);
-            fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
-                    nrows, nonzero, nonzero/nrows);
-            [L, V, ~]         = chooseLapl(W, K, laplMat);
-            x_spec            = kmeans(V, K,'Display', 'final','Replicates', 10);
-            plotter(W, Pts, L, V, x_spec);
-            
-        end
+
+        W       = computeSimGraph(Pts, simGraph);
+        nonzero = nnz(W);
+        nrows   = size(W,1);
+        fprintf("Adjacency generated : nrows = %d, nnz = %d, nnzr = %d\n",...
+                nrows, nonzero, nonzero/nrows);
+        [V, ~]  = chooseLapl(W, K, laplMat);
+        rng('default')
+        x_spec  = kmeans(V, K,'Replicates', 10);
         
         % Label inferred clustering results
-        [x_inferred, ~]  = label_data(x_spec, label);
+        [x_inferred, ~] = label_data(x_spec, label);
         
         % Evaluate clustering results, by computing confusion matrix, 
         % accuracy and RatioCut, NormalizedCut     
         evaluate_clusters(label, x_inferred, x_spec, W, 1, blackBox);
         
-        if connFun == 2
-            matName = sprintf("%s_%dNN.mat", caseName, kNN);
-        else
-            matName = strcat(caseName);
-            matName = strcat(matName,'_results.mat');
-        end
-    
+        matName = strcat(caseName);
+        matName = strcat(matName,'_results.mat');
+        
         if(~strcmp(matName, "NULL"))
             save(matName,'W','label')
         end

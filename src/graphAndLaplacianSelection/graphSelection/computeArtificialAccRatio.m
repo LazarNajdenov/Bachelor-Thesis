@@ -36,7 +36,7 @@ function [avgAcc1, avgAcc2, avgAcc3, avgRatio1, avgRatio2, avgRatio3] = computeA
     end
         
     
-    G1 = USI_epsilonSimGraph(epsilon, Pts);
+    G1 = USI_epsilonConGraph(epsilon, Pts);
     if ~isConnected(G1), error('The graph is not connected'); end
     S1 = gaussSimilarityfunc(Pts);
     W1 = sparse(S1 .* G1);

@@ -12,7 +12,6 @@ if min(x) == 0
     K = max(x)+1;
 else
     K = max(x);
-    %    x = x-1;
 end
 
 % Set to -1 the vector of the inferred_label
