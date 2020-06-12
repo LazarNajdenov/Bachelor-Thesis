@@ -11,6 +11,7 @@ function [G, kNN] = chooseConnFun(Pts, connFun)
 %          - 3 -> mutual k-nearest-neighbor (mkNN)
 % Output:
 % G:      connectivity matrix
+% kNN:    number of kNN if kNNConGraph o mkNNConGraph are used
     if nargout > 1
         kNN = 0;
     end

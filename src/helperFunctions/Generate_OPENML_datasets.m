@@ -1,5 +1,5 @@
 function [Data, label, num_labels] = Generate_OPENML_datasets(case_name)
-% Generate adjacencies matrices for OPENML datasets
+% Generate OPENML datapoints and labels
 
     file_name = strcat(case_name,'_all.mat');
     

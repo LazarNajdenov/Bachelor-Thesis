@@ -3,7 +3,7 @@ function main(caseName, blackBox, simGraph, laplMat)
 % spectral clustering techniques and evaluates the results.
 % 
 % Input
-% caseName: name of the dataset, i.e. 'ecoli' for the ecoli dataset
+% caseName: name of the dataset, i.e. 'ecoli' for the Ecoli_all.mat dataset
 % blackBox: flag which decides on using a blackBox spectral clustering;
 %           by default it is not used:
 %               - 0: No blackBox SC
@@ -29,7 +29,7 @@ function main(caseName, blackBox, simGraph, laplMat)
     clc;
     close all;
     warning off;
-    addpath datasets/
+    addpath generatedArtificialDatasets/
     addpath helperFunctions/
     addpath helperFunctions/wgPlot/
     addpath helperFunctions/plotFunctions/
